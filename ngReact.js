@@ -202,7 +202,7 @@
         var reactComponent = getReactComponent(attrs.name, $injector);
 
         var renderMyComponent = function() {
-          var scopeProps = scope.$eval(attrs.props);
+          var scopeProps = scope.$eval(attrs.props) || scope;
           var props = applyFunctions(scopeProps, scope);
 
           renderComponent(reactComponent, props, scope, elem);
