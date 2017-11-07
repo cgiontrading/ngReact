@@ -202,8 +202,14 @@
         var reactComponent = getReactComponent(attrs.name, $injector);
 
         var renderMyComponent = function() {
-          var scopeProps = scope.$eval(attrs.props) || scope;
-          var props = applyFunctions(scopeProps, scope);
+          var scopeProps = scope.$eval(attrs.props);
+          var props = scopeProps ? applyFunctions(scopeProps, scope) : scope;
+          // copy prototype properties
+          for (var key in props) {
+            if (!props.hasOwnProperty(key)) {
+              props[key] = props[key];
+            }
+          }
 
           renderComponent(reactComponent, props, scope, elem);
         };
