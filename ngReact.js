@@ -215,7 +215,7 @@
         };
         
         // get list of all properties, except NG internal ones
-        attrs.props = Object.keys(scope).reduce((attrs, key) => {
+        attrs.props = Object.keys(scope).reduce(function (attrs, key) {
             if (key.substr(0, 1) != '$') {
                 attrs.push(key);
             }
