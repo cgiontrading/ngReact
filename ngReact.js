@@ -213,7 +213,15 @@
 
           renderComponent(reactComponent, props, scope, elem);
         };
-
+        
+        // get list of all properties, except NG internal ones
+        attrs.props = Object.keys(scope).reduce((attrs, key) => {
+            if (key.substr(0, 1) != '$') {
+                attrs.push(key);
+            }
+            return attrs;
+        }, []);
+        
         // If there are props, re-render when they change
         attrs.props ?
           watchProps(attrs.watchDepth, scope, [attrs.props], renderMyComponent) :
