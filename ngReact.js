@@ -213,7 +213,7 @@
 
           renderComponent(reactComponent, props, scope, elem);
         };
-        
+
         // get list of all properties, except NG internal ones
         attrs.props = Object.keys(scope).reduce(function (attrs, key) {
             if (key.substr(0, 1) != '$') {
@@ -221,10 +221,11 @@
             }
             return attrs;
         }, []);
-        
-        // If there are props, re-render when they change
-        attrs.props ?
-          watchProps(attrs.watchDepth, scope, [attrs.props], renderMyComponent) :
+
+        // If there are props to watch we will do the first render when watch callback is invoked, else do the first render here.
+        // Props is already converted to array above, hence we pass it as it is.
+        attrs.props.length > 0 ?
+          watchProps(attrs.watchDepth, scope, attrs.props, renderMyComponent) :
           renderMyComponent();
 
         // cleanup when scope is destroyed
